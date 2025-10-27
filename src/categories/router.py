@@ -34,5 +34,3 @@ async def get_category(category_id: int, session: AsyncSession = Depends(get_ses
     except Exception as e:
         raise HTTPException(status_code=400, detail=e)
     return {'ok': True, 'data': result}
-
-

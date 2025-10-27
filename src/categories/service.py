@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.categories.schemas import SCategoryAdd, SCategoryResponse
@@ -22,7 +21,6 @@ class CategoryService:
     async def add_category(self, category_to_add: SCategoryAdd) -> int:
         res = await self.get_category_by_name(category_to_add.name)
         if res:
-            print('1')
             raise
         category = await self.repository.add_category(category_to_add)
         return SCategoryResponse.model_validate(category).id
