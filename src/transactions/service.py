@@ -12,7 +12,7 @@ class TransactionService:
         tr = await self.repository.get_transaction(transaction_id)
         return STransactionResponse.model_validate(tr)
     
-    async def get_category_by_name(self, category_name: str) -> STransactionResponse | None:
+    async def get_transaction_by_name(self, category_name: str) -> STransactionResponse | None:
         tr = await self.repository.get_transaction_by_name(category_name)
         if tr:
             return STransactionResponse.model_validate(tr)
