@@ -1,8 +1,15 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
+Mode = 'TEST'
 
-_engine = create_async_engine('sqlite+aiosqlite:///FinanceTracker')
+SQLALCHEMY_DATABASE_URL_TEST = "sqlite+aiosqlite:///:memory:"
+SQLALCHEMY_DATABASE_URL = 'sqlite+aiosqlite:///FinanceTracker'
+
+db_url = SQLALCHEMY_DATABASE_URL if Mode == 'PROD' else SQLALCHEMY_DATABASE_URL_TEST
+
+Base = declarative_base()
+_engine = create_async_engine(db_url)
 AsyncSessionLocal = async_sessionmaker(_engine, expire_on_commit=False)
 
 
@@ -19,7 +26,6 @@ async def get_session():
         yield session
 
 
-Base = declarative_base()
 
 async def create_tables():
     async with _engine.begin() as conn:

@@ -19,7 +19,8 @@ async def add_category(category: SCategoryAdd, session: AsyncSession = Depends(g
     try:
         result = await service.add_category(category)
         return {'ok': True, 'id': result}
-    except Exception:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=400, detail='category with that name already exists.')
 
     
